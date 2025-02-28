@@ -4,9 +4,7 @@ pragma solidity ^0.8.19;
 
 import { EnumerableSet } from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 import { Test } from "forge-std/Test.sol";
-// import { ERC20Mock } from "@openzeppelin/contracts/mocks/ERC20Mock.sol"; Updated mock location
 import { ERC20Mock } from "../../mocks/ERC20Mock.sol";
-
 import { MockV3Aggregator } from "../../mocks/MockV3Aggregator.sol";
 import { DSCEngine, AggregatorV3Interface } from "../../../src/DSCEngine.sol";
 import { DecentralizedStableCoin } from "../../../src/DecentralizedStableCoin.sol";
@@ -15,7 +13,7 @@ import { console } from "forge-std/console.sol";
 contract StopOnRevertHandler is Test {
     using EnumerableSet for EnumerableSet.AddressSet;
 
-    // Deployed contracts to interact with
+
     DSCEngine public dscEngine;
     DecentralizedStableCoin public dsc;
     MockV3Aggregator public ethUsdPriceFeed;
@@ -110,9 +108,9 @@ contract StopOnRevertHandler is Test {
         dsc.transfer(to, amountDsc);
     }
 
-    /////////////////////////////
+    ////////////////
     // Aggregator //
-    /////////////////////////////
+    ////////////////
     function updateCollateralPrice(uint96 newPrice, uint256 collateralSeed) public {
         int256 intNewPrice = int256(uint256(newPrice));
         ERC20Mock collateral = _getCollateralFromSeed(collateralSeed);

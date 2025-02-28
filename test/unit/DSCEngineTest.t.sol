@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.19;
+pragma solidity ^0.8.19;
 
 import { DeployDSC } from "../../script/DeployDSC.s.sol";
 import { DSCEngine } from "../../src/DSCEngine.sol";
 import { DecentralizedStableCoin } from "../../src/DecentralizedStableCoin.sol";
 import { HelperConfig } from "../../script/HelperConfig.s.sol";
-// import { ERC20Mock } from "@openzeppelin/contracts/mocks/ERC20Mock.sol"; Updated mock location
 import { ERC20Mock } from "../mocks/ERC20Mock.sol";
 import { MockV3Aggregator } from "../mocks/MockV3Aggregator.sol";
 import { MockMoreDebtDSC } from "../mocks/MockMoreDebtDSC.sol";
@@ -17,8 +16,7 @@ import { Test, console } from "forge-std/Test.sol";
 import { StdCheats } from "forge-std/StdCheats.sol";
 
 contract DSCEngineTest is StdCheats, Test {
-    event CollateralRedeemed(address indexed redeemFrom, address indexed redeemTo, address token, uint256 amount); // if
-        // redeemFrom != redeemedTo, then it was liquidated
+    event CollateralRedeemed(address indexed redeemFrom, address indexed redeemTo, address token, uint256 amount);
 
     DSCEngine public dsce;
     DecentralizedStableCoin public dsc;
@@ -100,9 +98,9 @@ contract DSCEngineTest is StdCheats, Test {
         assertEq(usdValue, expectedUsd);
     }
 
-    ///////////////////////////////////////
+    /////////////////////////////
     // depositCollateral Tests //
-    ///////////////////////////////////////
+    /////////////////////////////
 
     // this test needs it's own setup
     function testRevertsIfTransferFromFails() public {
@@ -194,9 +192,9 @@ contract DSCEngineTest is StdCheats, Test {
         assertEq(userBalance, amountToMint);
     }
 
-    ///////////////////////////////////
+    ///////////////////
     // mintDsc Tests //
-    ///////////////////////////////////
+    ///////////////////
     // This test needs it's own custom setup
     function testRevertsIfMintFails() public {
         // Arrange - Setup
@@ -226,8 +224,6 @@ contract DSCEngineTest is StdCheats, Test {
     }
 
     function testRevertsIfMintAmountBreaksHealthFactor() public depositedCollateral {
-        // 0xe580cc6100000000000000000000000000000000000000000000000006f05b59d3b20000
-        // 0xe580cc6100000000000000000000000000000000000000000000003635c9adc5dea00000
         (, int256 price,,,) = MockV3Aggregator(ethUsdPriceFeed).latestRoundData();
         amountToMint = (amountCollateral * (uint256(price) * dsce.getAdditionalFeedPrecision())) / dsce.getPrecision();
 
@@ -247,9 +243,9 @@ contract DSCEngineTest is StdCheats, Test {
         assertEq(userBalance, amountToMint);
     }
 
-    ///////////////////////////////////
+    ///////////////////
     // burnDsc Tests //
-    ///////////////////////////////////
+    ///////////////////
 
     function testRevertsIfBurnAmountIsZero() public {
         vm.startPrank(user);
@@ -276,9 +272,9 @@ contract DSCEngineTest is StdCheats, Test {
         assertEq(userBalance, 0);
     }
 
-    ///////////////////////////////////
+    ////////////////////////////
     // redeemCollateral Tests //
-    //////////////////////////////////
+    ////////////////////////////
 
     // this test needs it's own setup
     function testRevertsIfTransferFails() public {
@@ -486,9 +482,9 @@ contract DSCEngineTest is StdCheats, Test {
         assertEq(userDscMinted, 0);
     }
 
-    ///////////////////////////////////
+    ////////////////////////////////
     // View & Pure Function Tests //
-    //////////////////////////////////
+    ////////////////////////////////
     function testGetCollateralTokenPriceFeed() public {
         address priceFeed = dsce.getCollateralTokenPriceFeed(weth);
         assertEq(priceFeed, ethUsdPriceFeed);

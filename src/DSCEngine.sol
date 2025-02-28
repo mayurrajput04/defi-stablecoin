@@ -33,7 +33,7 @@ import { DecentralizedStableCoin } from "./DecentralizedStableCoin.sol";
 
 /*
  * @title DSCEngine
- * @author Patrick Collins
+ * @author Gintoki Sakata
  *
  * The system is designed to be as minimal as possible, and have the tokens maintain a 1 token == $1 peg at all times.
  * This is a stablecoin with the properties:
@@ -52,7 +52,7 @@ import { DecentralizedStableCoin } from "./DecentralizedStableCoin.sol";
  */
 contract DSCEngine is ReentrancyGuard {
     ///////////////////
-    // Errors
+    //     Errors    //
     ///////////////////
     error DSCEngine__TokenAddressesAndPriceFeedAddressesAmountsDontMatch();
     error DSCEngine__NeedsMoreThanZero();
@@ -64,12 +64,12 @@ contract DSCEngine is ReentrancyGuard {
     error DSCEngine__HealthFactorNotImproved();
 
     ///////////////////
-    // Types
+    // Types        //
     ///////////////////
     using OracleLib for AggregatorV3Interface;
 
     ///////////////////
-    // State Variables
+    // State Variables/
     ///////////////////
     DecentralizedStableCoin private immutable i_dsc;
 
@@ -95,10 +95,10 @@ contract DSCEngine is ReentrancyGuard {
     ///////////////////
     event CollateralDeposited(address indexed user, address indexed token, uint256 indexed amount);
     event CollateralRedeemed(address indexed redeemFrom, address indexed redeemTo, address token, uint256 amount); // if
-        // redeemFrom != redeemedTo, then it was liquidated
+        // if redeemFrom != redeemedTo, then it was liquidated
 
     ///////////////////
-    // Modifiers
+    // Modifiers     //
     ///////////////////
     modifier moreThanZero(uint256 amount) {
         if (amount == 0) {
@@ -115,7 +115,7 @@ contract DSCEngine is ReentrancyGuard {
     }
 
     ///////////////////
-    // Functions
+    // Functions     //
     ///////////////////
     constructor(address[] memory tokenAddresses, address[] memory priceFeedAddresses, address dscAddress) {
         if (tokenAddresses.length != priceFeedAddresses.length) {
@@ -130,9 +130,9 @@ contract DSCEngine is ReentrancyGuard {
         i_dsc = DecentralizedStableCoin(dscAddress);
     }
 
-    ///////////////////
-    // External Functions
-    ///////////////////
+    ////////////////////////
+    // External Functions //
+    ////////////////////////
     /*
      * @param tokenCollateralAddress: The ERC20 token address of the collateral you're depositing
      * @param amountCollateral: The amount of collateral you're depositing
@@ -190,13 +190,13 @@ contract DSCEngine is ReentrancyGuard {
     }
 
     /*
-     * @notice careful! You'll burn your DSC here! Make sure you want to do this...
-     * @dev you might want to use this if you're nervous you might get liquidated and want to just burn
-     * your DSC but keep your collateral in.
+     * 
+     * @dev you might want to use this when you want to just burn
+     * your DSC but keep your collateral (might get liquidated).
      */
     function burnDsc(uint256 amount) external moreThanZero(amount) {
         _burnDsc(amount, msg.sender, msg.sender);
-        revertIfHealthFactorIsBroken(msg.sender); // I don't think this would ever hit...
+        revertIfHealthFactorIsBroken(msg.sender); 
     }
 
     /*
@@ -248,9 +248,9 @@ contract DSCEngine is ReentrancyGuard {
         revertIfHealthFactorIsBroken(msg.sender);
     }
 
-    ///////////////////
-    // Public Functions
-    ///////////////////
+    //////////////////////
+    // Public Functions //
+    //////////////////////
     /*
      * @param amountDscToMint: The amount of DSC you want to mint
      * You can only mint DSC if you have enough collateral
@@ -286,9 +286,9 @@ contract DSCEngine is ReentrancyGuard {
         }
     }
 
-    ///////////////////
-    // Private Functions
-    ///////////////////
+    ///////////////////////
+    // Private Functions //
+    ///////////////////////
     function _redeemCollateral(
         address tokenCollateralAddress,
         uint256 amountCollateral,
@@ -309,16 +309,16 @@ contract DSCEngine is ReentrancyGuard {
         s_DSCMinted[onBehalfOf] -= amountDscToBurn;
 
         bool success = i_dsc.transferFrom(dscFrom, address(this), amountDscToBurn);
-        // This conditional is hypothetically unreachable
+
         if (!success) {
             revert DSCEngine__TransferFailed();
         }
         i_dsc.burn(amountDscToBurn);
     }
 
-    //////////////////////////////
-    // Private & Internal View & Pure Functions
-    //////////////////////////////
+    ///////////////////////////////////////////////
+    // Private & Internal View & Pure Functions ///
+    ///////////////////////////////////////////////
 
     function _getAccountInformation(address user)
         private
@@ -364,11 +364,10 @@ contract DSCEngine is ReentrancyGuard {
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////
-    // External & Public View & Pure Functions
-    ////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////
+    
+    /////////////////////////////////////////////
+    // External & Public View & Pure Functions //
+    /////////////////////////////////////////////
     function calculateHealthFactor(
         uint256 totalDscMinted,
         uint256 collateralValueInUsd
