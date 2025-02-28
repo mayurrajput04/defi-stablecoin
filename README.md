@@ -2,15 +2,19 @@
 
 ## 🌟 Overview
 
-The **Decentralized Stablecoin (DSC)** is a next-gen, overcollateralized stablecoin inspired by DAI but with **zero governance fees**! Powered by **ETH & BTC collateral**, it ensures **price stability** using an advanced minting and burning mechanism. The system is secured by **Chainlink oracles** and includes **fail-safe liquidation protections** to keep everything running smoothly. 💪
+The **Decentralized Stablecoin (DSC)** is a next-gen, overcollateralized stablecoin inspired by DAI but with **zero governance fees**! 
+
+Powered by **ETH & BTC collateral**, it ensures **price stability** using an advanced minting and burning mechanism. 
+
+The system is secured by **Chainlink oracles** and includes **fail-safe liquidation protections** to keep everything running smoothly. 💪
 
 ## 🔥 Features
 
-✅ **Overcollateralized Stability**: Backed by ETH & BTC for a robust peg.
-✅ **Smart Minting & Burning**: Fully algorithmic & trustless.
-✅ **Rock-Solid Price Feeds**: Chainlink-powered oracles ensure reliable data.
-✅ **Failsafe Mechanisms**: No risky trades—only secure transactions!
-✅ **Bulletproof Testing**: Unit tests, fuzz testing, and mocks for complete reliability.
+- **Overcollateralized Stability**: Backed by ETH & BTC for a robust peg.
+- **Smart Minting & Burning**: Fully algorithmic & trustless.
+- **Rock-Solid Price Feeds**: Chainlink-powered oracles ensure reliable data.
+- **Failsafe Mechanisms**: No risky trades—only secure transactions!
+- **Bulletproof Testing**: Unit tests, fuzz testing, and mocks for complete reliability.
 
 ---
 
@@ -28,7 +32,7 @@ Before diving in, ensure you have:
 
 ```bash
 git clone https://github.com/mayurrajput04/defi-stablecoin
-cd defi-stablecoin-main
+cd defi-stablecoin
 ```
 
 ### 📦 Install Dependencies
@@ -45,7 +49,7 @@ forge install
 
 - ERC20-based stablecoin, **minting/burning restricted** to `DSCEngine`.
 - **Burnable** for controlled supply management.
-- Ownership **transferred to ****`DSCEngine`** to prevent abuse.
+- Ownership **transferred to `DSCEngine`** to prevent abuse.
 
 ### 🏗️ **DSCEngine.sol** (The Powerhouse)
 
@@ -65,14 +69,14 @@ forge install
 
 ### 💰 **Minting DSC** (Get Your Stablecoins!)
 
-1️⃣ Deposit **WETH or WBTC** as collateral.
-2️⃣ Ensure you meet the **overcollateralization ratio**.
-3️⃣ Call `depositCollateralAndMintDsc()` in `DSCEngine`.
+- Deposit **WETH or WBTC** as collateral.
+- Ensure you meet the **overcollateralization ratio**.
+- Call `depositCollateralAndMintDsc()` in `DSCEngine`.
 
 ### 🔄 **Redeeming Collateral** (Get Back Your Assets!)
 
-1️⃣ Burn **DSC** equal to the collateral value.
-2️⃣ Call `redeemCollateralForDsc()` in `DSCEngine`.
+- Burn **DSC** equal to the collateral value.
+- Call `redeemCollateralForDsc()` in `DSCEngine`.
 
 ### ⚠️ **Liquidation Protection**
 
@@ -121,10 +125,11 @@ forge verify-contract <CONTRACT_ADDRESS> <CONTRACT_NAME> --etherscan-api-key <YO
 ## 🤝 Contribute & Build With Me!
 
 I love contributions! Follow these simple steps:
-1️⃣ **Fork the repository**.
-2️⃣ **Create a new feature branch**.
-3️⃣ **Commit your changes with great messages**.
-4️⃣ **Submit a pull request**—let's make DSC stronger together! 💪
+
+- **Fork the repository**.
+- **Create a new feature branch**.
+- **Commit your changes with great messages**.
+- **Submit a pull request**—let's make DSC stronger together! 💪
 
 ---
 
